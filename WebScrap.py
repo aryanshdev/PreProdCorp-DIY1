@@ -9,17 +9,21 @@
     ________________________________________________________________________
     
     Dependecies:
+
         Enviroment : 
-            Python 3.11.4
-            [MSC v.1934 64 bit (AMD64)] on win32
+            Python 3.11.4 [MSC v.1934 64 bit (AMD64)] on win32
             Windows 11
+
+            Tested On :
+            Kali Linux 2022 (Custom Image) - Debian Based Linux
+
         Modules :
             requests
             BeautifulSoup
             csv
             os
-        Module Installation : pip install -r requirements.txt
 
+        Module Installation : pip install -r requirements.txt
 """
 
 
@@ -88,6 +92,7 @@ def Web_Table_To_CSV(url):
     csvFile.close()                                     # Close And Save File
     print("Dataset CSV Saved At : "+path)               # Output Echo to user
     return path
+
 
 # Example Usage
 # Web_Table_To_CSV(
