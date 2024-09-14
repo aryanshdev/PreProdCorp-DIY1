@@ -77,7 +77,7 @@ Usage Example:
     scrapper.Web_Table_To_CSV('www.example.com')
 <br/>
 
-> ⚠️ENSURE TO FIRST OPEN THE DIRECTORY CONTAINING ALL FILES AND THEN RUN webscrap.py AS THE PATH FOR DRIVER IS RELATIVE AND IF YOU NOT OPEN THE CORRECT DIRECTORY BEFORE RUNNING,GetECommData WILL CRASH <br/> Like : if all files are in extracted/Data Source, first use `cd './extracted/Data Source'` then use ```python webscrap.py```
+> ⚠️ENSURE TO FIRST OPEN THE DIRECTORY CONTAINING ALL FILES AND THEN RUN webscrap.py AS THE PATH FOR DRIVER IS RELATIVE AND IF YOU NOT OPEN THE CORRECT DIRECTORY BEFORE RUNNING,GetECommData WILL CRASH <br/> Like : if all files are in extracted/Data Source, first use `cd './extracted/Data Source'` then use ```python webscrap.py```<br/> i.e. EXECUTE PYTHON SCRIPT FROM SAME LOCATION AS OF THE FILES
 
  `GetECommData`: This method allows us to collect data about a category of products from 2 Popular E-Commerce website- Amazon and Flipkart.
 It takes a product category as input and has 2 optionals, Amazon and Flipkart, which take True/False as input values and are used to select the eccom website to gather data from, by default Amazon is True and Flipkart is False.
