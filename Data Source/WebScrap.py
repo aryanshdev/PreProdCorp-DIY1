@@ -39,7 +39,6 @@ from selenium import webdriver
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
 
-# Function Defination
 
 class WebScraper():
     def Web_Table_To_CSV(this,url):
@@ -185,4 +184,4 @@ class WebScraper():
 # scrapper = WebScraper()
 # scrapper.Web_Table_To_CSV(
 #     "https://anakin.ai/blog/groq-llama-3-1-api-pricing/#comparing-llama-31-models-on-groq")
-# scrapper.GetECommData("laptop", Flipkart=False, Amazon=True)
+# scrapper.GetECommData("laptop", Flipkart=True, Amazon=False)
