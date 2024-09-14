@@ -9,23 +9,19 @@
             Python 3.11.4 [MSC v.1934 64 bit (AMD64)] on win32
             Windows 11
 
-            Tested On :
-            Kali Linux 2022 (Custom Image) - Debian Based Linux
-
         Modules :
             pandas
             requests
-            csv
             scikit-learn
 
-        Module Installation : No Specific, Built-In Library Modules Used
+        Module Installation : pip install -r requirements.txt
 """
 
 
 import pandas as pd
 import requests as req
 import sqlite3
-import sklearn.linear_model
+from sklearn.linear_model import LinearRegression
 
 
 # class containing various Data Enriching functionalities
@@ -118,6 +114,33 @@ class EnrichData():
                 final = pd.concat([data, collected], ignore_index=True)
                 final.to_csv(inputfile)
                 print("Saved Data To File")
+
+    # Filling Missing Values
+    def FillMissingNumericValues(this, inputfile):
+        raw = pd.read_csv(inputfile)
+        # ask user for fields to fill and based on which field to fill
+        print("Fields Are :\n" + ", ".join(raw.head()))
+        targetField = input("Enter Target Field : ")
+        indpendentField = input("Enter Independent Field : ")
+        # Test Train splitting
+        train_df = raw[raw[targetField].notna()]
+        test_df = raw[raw[targetField].isna()]
+        print(train_df)
+        # Split features and target for linear regression
+        # Using independentField to predict targetField
+        xTrain = train_df[[indpendentField]]
+        yTrain = train_df[targetField]
+        # create model object and train
+        model = LinearRegression()
+        model.fit(xTrain, yTrain)
+        # prediect missing values
+        predicted_values = model.predict(test_df)
+        # save values back to datafram
+        raw.loc[raw[targetField].isna(), targetField] = predicted_values
+        # save back to file
+        raw.to_csv(inputfile, index=False)
+        print("Filled Values")
+
 
 
 # Example Usage

@@ -103,10 +103,9 @@ def Web_Table_To_CSV(url):
 
 def GetECommData(product, Amazon=True, Flipkart=False):
     # check if both are false
-    if (not Amazon and Flipkart):
+    if (Amazon == False and Flipkart == False):
         print("Any One Option is Required")
         return
-    Amazon = not Flipkart
     # Path to the msedgedriver.exe
     edge_driver_path = r'msedgedriver.exe'
     # Create an duumy Edge browser instance using edgedriver
@@ -131,21 +130,28 @@ def GetECommData(product, Amazon=True, Flipkart=False):
         for i in productCards:
             details = {}
             details["product_name"] = i.select_one("h2 a span").text
-            details["rating"] = i.find(
-                'span', class_='a-icon-alt').text.split(" ")[0]
+            try:
+                details["rating"] = i.find(
+                    'span', class_='a-icon-alt').text.split(" ")[0]
+            except AttributeError:
+                try:
+                    details["rating"] = i.select_one("i.a-icon.a-icon-star-small.a-star-small-4.aok-align-bottom span").text.split(" ")[0]
+                except AttributeError:
+                    details["rating"] = None
+
             details["price"] = i.find(
                 "span", class_="a-price").find("span", class_="a-offscreen").text[1:]
             # Add Product Details to All Details Array
             productDetails.append(details)
         with open("amazon_output.csv", "w", newline="") as f:
             # Create Pandas Dataframe to easy handle data
-            pandas.DataFrame(productDetails).to_csv(f,index=False)
+            pandas.DataFrame(productDetails).to_csv(f, index=False)
             # Write All Data
             print("Dataset CSV Saved At : "+os.path.join(os.path.curdir,
                   "amazon_output.csv"))               # Output Echo to user
             return os.path.join(os.path.curdir,
                                 "amazon_output.csv")
-    else:
+    if Flipkart:
         # target search url of Flipkart
         url = f"https://www.flipkart.com/search?q={product}&otracker=search&marketplace=FLIPKART"
         # Create Normal HTTPS-GET Request via Dummy browser
@@ -168,7 +174,7 @@ def GetECommData(product, Amazon=True, Flipkart=False):
             productDetails.append(details)
         with open("flipkart_output.csv", "w", newline="") as f:
             # Create Pandas Dataframe to easy handle data
-            pandas.DataFrame(productDetails).to_csv(f,index=False))
+            pandas.DataFrame(productDetails).to_csv(f, index=False)
             # Write All Data
             print("Dataset CSV Saved At : "+os.path.join(os.path.curdir,
                   "flipkart_output.csv"))               # Output Echo to user
@@ -179,4 +185,4 @@ def GetECommData(product, Amazon=True, Flipkart=False):
 # Example Usage
 # Web_Table_To_CSV(
 #     "https://anakin.ai/blog/groq-llama-3-1-api-pricing/#comparing-llama-31-models-on-groq")
-GetECommData("laptop", Flipkart=True)
+GetECommData("laptop", Flipkart=False, Amazon=True)
